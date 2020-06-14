@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png">
-
-    <title>Bonjour | Personal Branding</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> 
+    <script src="js/jquery.min.js"></script>
+    <title>Bonjour | Personal Identity Branding</title>
     <style>
         body{
             margin:0;
@@ -66,8 +67,17 @@
             <img class="mySlides--img" src="img/nat-6.jpg" id="lastSlide">
         </div>
     </div>
-    <h1 class="slideshow-title" id="slideshow-title">Bonjour</h1>
+    <h1 class="slideshow-title drop">Bonjour</h1>
+    <h1 class="slideshow-title drop">Benjamin</h1>
+    <h1 class="slideshow-title drop">You</h1>
+    <h1 class="slideshow-title drop">Can't</h1>
+    <h1 class="slideshow-title drop">Touch</h1>
+    <h1 class="slideshow-title drop">This</h1>
 
+    <div class="slideshow-swipe">
+        <!--<i class="far fa-hand-point-up"></i>-->
+        <p class="swipe-text"><span id="left-swipe">&larr;</span> Swipe <span id="right-swipe">&rarr;</span></p>
+    </div>
 </div>
 
 <br>
@@ -77,53 +87,122 @@
 </html> 
 <script>
     let containerz = document.getElementById("wheel");
-    let final;
+    let containerWidth;
     let segment; //one slide in the slide carousel
     //////////////////////////////////
     /////Change words on title
     //////////////
-    let title = document.getElementById('slideshow-title');
+    let body = document.querySelector('body');
+    let title = document.getElementsByClassName('slideshow-title');
     function setFinal(){
-        final = containerz.scrollWidth - containerz.clientWidth - 1;
-        segment = final/6;
+        segment = (containerWidth)/6;
+        console.log('segment is', segment);
     }
+    function setWheelClone(){
+        $('#wheel').ready(function(){
+        containerWidth = containerz.scrollWidth;
+
+        let clone=$("#wheel").contents().clone();
+        clone.appendTo("#wheel");
+        clone.prependTo("#wheel");
+
+        $('#wheel').scroll(function(){
+            let scrollWindowPos = $('#wheel').scrollLeft();
+            if(scrollWindowPos >= containerWidth){
+                $('#wheel').scrollLeft(0)
+            }
+            if(scrollWindowPos <= 0){
+                $('#wheel').scrollLeft(containerWidth);
+            }
+            let cur = 0;
+            for(let i = 0; i< title.length; i++){
+                title[i].style.display = "none";
+                if(containerz.scrollLeft > (segment * (i-1)) && containerz.scrollLeft <= (segment * i)){
+                    cur = i;
+                }
+                if(containerz.scrollLeft > (segment * (title.length -1))){
+                    cur = title.length - 1;
+                }
+            }
+            //adjust cur to match the if statements
+            title[cur].style.display = "block";
+        })
+    })
+    };
     function scrollSpy(){
-        
         console.log('final is', final);
         containerz.scrollLeft += 10;
+        //segment = final / 6;
         containerz.addEventListener('scroll', function(e){
+            console.log('scrolling ', containerz.scrollTop);
             if(containerz.scrollLeft >= final){
                 containerz.scrollTo(10, 0);
             }
             if(containerz.scrollLeft == 0){
                 containerz.scrollTo(final-10, 0);
             }
-            if(containerz.scrollLeft > 0 && containerz.scrollLeft <= segment){
-                title.innerText = 'Bonjour'
+            // cur == currentSegment
+            let cur = 0;
+            for(let i = 0; i< title.length; i++){
+                title[i].style.display = "none";
+                if(containerz.scrollLeft > (segment * (i-1)) && containerz.scrollLeft <= (segment * i)){
+                    cur = i;
+                }
+                if(containerz.scrollLeft > (segment * (title.length -1))){
+                    cur = title.length - 1;
+                }
             }
-            if(containerz.scrollLeft > segment && containerz.scrollLeft <= (segment*2)){
-                title.innerText = 'Benjamin';
-            }
-            if(containerz.scrollLeft > (segment*2) && containerz.scrollLeft <= (segment*3)){
-                title.innerText = 'You';
-            }
-            if(containerz.scrollLeft > (segment*3) && containerz.scrollLeft <= (segment*4)){
-                title.innerText = "Can't";
-            }
-            if(containerz.scrollLeft > (segment*4) && containerz.scrollLeft <= (segment*5)){
-                title.innerText = "Touch";
-            }
-            if(containerz.scrollLeft > (segment*5)){
-                title.innerText = "This";
-            }
+            //adjust cur to match the if statements
+            title[cur].style.display = "block";
 
         })
     };
-    setTimeout(setFinal, 2000)
-    setTimeout(scrollSpy, 2005);
+    //setTimeout(padSpaces, 2500);
+    setWheelClone();
+
+    setTimeout(setFinal, 1500)
+    //setTimeout(scrollSpy, 2005);
     ///////////////////////////////////
     //Check for changes in device width
     ////
     window.addEventListener('resize', setFinal);
+    /*
+    let things = document.getElementsByClassName('mySlides');
+    let i = 0;
+let dimension = [];
+for( i = 0; i < things.length; i++){
+    dimension.push(things[0].getBoundingClientRect());
+    */
 
 </script>
+<!--
+    <div class="slideshow-wheel">
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 5</div>
+            <img class="mySlides--img" src="img/travel-1.jpeg">
+            <div class="text-2">Caption One</div>
+        </div>
+    
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 5</div>
+            <img class="mySlides--img" src="img/travel-2.jpeg">
+            <div class="text-2">Caption Two</div>
+        </div>
+    
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 5</div>
+            <img class="mySlides--img" src="img/travel-3.jpeg">
+            <div class="text-2">Caption Three</div>
+        </div>
+        <div class="mySlides fade">
+            <div class="numbertext">4 / 5</div>
+            <img class="mySlides--img" src="img/travel-4.jpeg">
+            <div class="text-2">Caption Four</div>
+        </div>
+        <div class="mySlides fade">
+            <div class="numbertext">5 / 5</div>
+            <img class="mySlides--img" src="img/travel-5.jpeg">
+            <div class="text-2">Caption Five</div>
+        </div>
+    </div>
+-->
