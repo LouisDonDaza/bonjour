@@ -449,7 +449,8 @@ body {
   background-color: white;
   width: 100vw;
   height: 100vh;
-  position: relative; }
+  position: relative;
+  opacity: 1; }
   .slideshow-container ::-webkit-scrollbar {
     width: 5px; }
   .slideshow-container ::-webkit-scrollbar-track {
@@ -489,6 +490,7 @@ body ::-webkit-scrollbar-thumb {
     line-height: 1.6; }
 
 .slideshow-wheel {
+  opacity: 1;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -509,7 +511,7 @@ body ::-webkit-scrollbar-thumb {
         margin-right: 15rem; } }
 
 .mySlides {
-  margin: 0 30rem;
+  padding: 0 30rem;
   z-index: 6; }
   .mySlides img {
     height: auto;
@@ -529,7 +531,7 @@ body ::-webkit-scrollbar-thumb {
         height: auto; } }
   @media only screen and (max-width: 37.5em) {
     .mySlides {
-      margin: 0 10rem; } }
+      padding: 0 8rem; } }
 
 .slideshow-swipe {
   position: absolute;
@@ -585,98 +587,52 @@ body ::-webkit-scrollbar-thumb {
   100% {
     margin-left: 8px; } }
 
-.white {
-  height: 100vh; }
-  .white:before {
-    z-index: 1000;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60vh;
-    background-image: linear-gradient(-180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%); }
-  .white:after {
-    z-index: 1000;
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 20vh;
-    background-image: linear-gradient(0deg, #EBEBEB 0%, rgba(235, 235, 235, 0) 100%); }
-
-.squares {
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  overflow: hidden; }
-
-.square {
-  animation: squares 9.5s linear infinite;
-  align-self: flex-end;
-  width: 1em;
-  height: 1em;
-  transform: translateY(100%);
-  background: #ebebeb; }
-  .square:nth-child(2) {
-    height: 1.5em;
-    width: 3em;
-    animation-delay: 1s;
-    animation-duration: 17s;
-    filter: blur(5px); }
-  .square:nth-child(3) {
-    height: 2em;
-    width: 1em;
-    animation-delay: 1.5s;
-    animation-duration: 8s;
-    filter: blur(1px); }
-  .square:nth-child(4) {
-    height: 1em;
-    width: 1.5em;
-    animation-delay: 0.5s;
-    filter: blur(3px);
-    animation-duration: 13s; }
-  .square:nth-child(5) {
-    height: 1.25em;
-    width: 2em;
-    animation-delay: 4s;
-    filter: blur(2px);
-    animation-duration: 11s; }
-  .square:nth-child(6) {
-    height: 2.5em;
-    width: 2em;
-    animation-delay: 2s;
-    filter: blur(1px);
-    animation-duration: 9s; }
-  .square:nth-child(7) {
-    height: 5em;
-    width: 2em;
-    filter: blur(2.5px);
-    animation-duration: 12s; }
-  .square:nth-child(8) {
-    height: 1em;
-    width: 3em;
-    animation-delay: 5s;
-    filter: blur(6px);
-    animation-duration: 18s; }
-  .square:nth-child(9) {
-    height: 1.5em;
-    width: 2em;
-    filter: blur(0.5px);
-    animation-duration: 9s; }
-  .square:nth-child(9) {
-    height: 3em;
-    width: 2.4em;
-    animation-delay: 6s;
-    filter: blur(0.5px);
-    animation-duration: 12s; }
-
-@keyframes squares {
-  from {
-    transform: translateY(100%) rotate(-50deg); }
-  to {
-    transform: translateY(calc(-100vh + -100%)) rotate(20deg); } }
+.slide {
+  position: absolute;
+  display: none;
+  opacity: 0;
+  left: 50%;
+  top: 7%;
+  transform: translate(-50%, 0);
+  z-index: 1;
+  width: 700px;
+  max-width: 100ch; }
+  @media only screen and (max-width: 37.5em) {
+    .slide {
+      width: 90vw;
+      max-width: 90vw; } }
+  .slide__figure--main {
+    margin-bottom: 0.5rem; }
+  .slide__figure-img {
+    display: block;
+    margin: 0px auto;
+    height: 55vh;
+    width: auto; }
+    .slide__figure-img--landscape {
+      width: 90%;
+      height: auto; }
+  .slide__text {
+    margin: 10px 0; }
+  .slide__back {
+    opacity: 1;
+    background: none;
+    border: 0;
+    margin: 0;
+    height: 2.4rem;
+    width: 2.4rem;
+    font-size: 2.4rem; }
+    .slide__back a {
+      text-decoration: none;
+      color: #111; }
+  .slide__content {
+    opacity: 1;
+    font-size: 2rem;
+    text-align: justify;
+    padding: 3.2rem 0;
+    margin: 0px auto;
+    color: #111; }
+    .slide__content p {
+      margin: 20px 0; }
 
 .section-about {
   background-color: #f7f7f7;
