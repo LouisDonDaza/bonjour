@@ -68,29 +68,9 @@
             <img class="mySlides--img mySlides--img--6" src="img/nat-4.jpg" id="lastSlide">
         </div>
     </div>
-    <div class="slideshow-title" id="test">
+    <div class="slideshow-title">
         <h1>Bonjour</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat expedita voluptatibus nihil officia dolorem a perferendis molestiae inventore facilis, cum modi similique ipsum fuga, eligendi nesciunt. Temporibus illum qui id!</p>
-    </div>
-    <div class="slideshow-title" id="test2">
-        <h1>Benjamin</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-    </div>
-    <div class="slideshow-title" id="test3">
-        <h1>You</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus veritatis totam a nostrum, nesciunt ullam commodi qui.</p>
-    </div>
-    <div class="slideshow-title" id="test4">
-        <h1>Can't</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus facilis voluptates, modi hic veniam consequuntur minima!</p>
-    </div>
-    <div class="slideshow-title" id="test5">
-        <h1>Touch</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem recusandae quos culpa?</p>
-    </div>
-    <div class="slideshow-title" id="test6">
-        <h1>This</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos magni earum similique reprehenderit quis doloribus mollitia? Sapiente earum porro possimus mollitia natus praesentium!</p>
     </div>
 
     
@@ -218,107 +198,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/ScrollTrigger.min.js"></script>
 <script>
     
-    let animateActions = "restart complete resume none";
-    let startPt = "left 50%";
-    let endPt = "center 50%";
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#test-slides-1',
-            horizontal: true,
-            scroller: "#wheel",
-            start: startPt,
-            end: endPt,
-            toggleActions: animateActions,
-            markers: true,
-            scrub: 1
-        }
-    })
-    
-    tl.fromTo('#test6', 0.4, {top: "50%", opacity: "1"}, {top: "60%", opacity:"0", ease: Power2.easeInOut})
-    .fromTo('#test', 0.5, {top: "40%", opacity: "0"}, {top: "50%", opacity:"1", ease: Power2.easeInOut});
-
-    let tl2 = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#test-slides-2',
-            horizontal: true,
-            scroller: "#wheel",
-            start: startPt,
-            end: endPt,
-            toggleActions: animateActions,
-            scrub: 1
-        }
-    })
-    
-    tl2.fromTo('#test', 1, {top: "50%", opacity: "1"}, {top: "60%", opacity:"0", ease: Power2.easeInOut})
-    .fromTo('#test2', 1, {top: "40%", opacity: "0"}, {top: "50%", opacity:"1", ease: Power2.easeInOut}, "<");
-    let tl3 = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#test-slides-3',
-            horizontal: true,
-            scroller: "#wheel",
-            start: startPt,
-            end: endPt,
-            toggleActions: animateActions,
-            scrub: 1
-        }
-    })
-    
-    tl3.fromTo('#test2', 1, {top: "50%", opacity: "1"}, {top: "60%", opacity:"0", ease: Power2.easeInOut})
-    .fromTo('#test3', 1, {top: "40%", opacity: "0"}, {top: "50%", opacity:"1", ease: Power2.easeInOut}, "<");
-
-    let tl4 = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#test-slides-4',
-            horizontal: true,
-            scroller: "#wheel",
-            start: startPt,
-            end: endPt,
-            toggleActions: animateActions,
-            scrub: 1
-        }
-    })
-    
-    tl4.fromTo('#test3', 1, {top: "50%", opacity: "1"}, {top: "60%", opacity:"0", ease: Power2.easeInOut})
-    .fromTo('#test4', 1, {top: "40%", opacity: "0"}, {top: "50%", opacity:"1", ease: Power2.easeInOut}, "<");
-
-    let tl5 = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#test-slides-5',
-            horizontal: true,
-            scroller: "#wheel",
-            start: startPt,
-            end: endPt,
-            toggleActions: animateActions,
-            scrub: 1
-        }
-    })
-    
-    tl5.fromTo('#test4', 1, {top: "50%", opacity: "1"}, {top: "60%", opacity:"0", ease: Power2.easeInOut})
-    .fromTo('#test5', 1, {top: "40%", opacity: "0"}, {top: "50%", opacity:"1", ease: Power2.easeInOut}, "<");
-
-    let tl6 = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#test-slides-6',
-            horizontal: true,
-            scroller: "#wheel",
-            start: startPt,
-            end: endPt,
-            toggleActions: animateActions,
-            scrub: 1
-        }
-    })
-    
-    tl6.fromTo('#test5', 1, {top: "50%", opacity: "1"}, {top: "60%", opacity:"0", ease: Power2.easeInOut})
-    .fromTo('#test6', 1, {top: "40%", opacity: "0"}, {top: "50%", opacity:"1", ease: Power2.easeInOut}, "<");
-
-   
-    window.addEventListener('DOMContentLoaded', (event) => {
-        let slidezz = document.getElementsByClassName('slideshow-title');
-        for(let i = 0; i < slidezz.length; i++){
-            slidezz[i].style.opacity = '0';
-        }
-        //slidezz[5].style.opacity = '0';
-    });
 
     //imgSlides will refer to the DOM element .mySlides--img
     //it gets declared later on in the click initialization function

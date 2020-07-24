@@ -471,10 +471,8 @@ body ::-webkit-scrollbar-thumb {
   color: black;
   position: absolute;
   top: 50%;
-  left: 60%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: display 0.8s ease;
   text-align: center; }
   .slideshow-title h1 {
     font-size: 9rem;
