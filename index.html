@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> 
     <script src="js/jquery.min.js"></script>
     <title>Bonjour | Personal Identity Branding</title>
@@ -68,10 +67,7 @@
             <img class="mySlides--img mySlides--img--6" src="img/nat-4.jpg" id="lastSlide">
         </div>
     </div>
-    <div class="slideshow-title">
-        <h1>Bonjour</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat expedita voluptatibus nihil officia dolorem a perferendis molestiae inventore facilis, cum modi similique ipsum fuga, eligendi nesciunt. Temporibus illum qui id!</p>
-    </div>
+    <h1 class="slideshow-title" id="slideshow-title">Bonjour</h1>
 
     
     <div class="slide slide--layout-1" id="slide--1">
@@ -235,7 +231,6 @@
     /////Change words on title
     //////////////
     let body = document.querySelector('body');
-    let title = document.getElementsByClassName('slideshow-title');
 
     //slides
     let slidez = document.getElementsByClassName('mySlides');
@@ -271,10 +266,33 @@
         
     })
     };
+    let title = document.getElementById('slideshow-title');
+    function scrollSpy(){
+        containerz.addEventListener('scroll', function(e){
+            if(containerz.scrollLeft > 0 && containerz.scrollLeft <= segment){
+                title.innerText = 'Bonjour';
+            }
+            if(containerz.scrollLeft > segment && containerz.scrollLeft <= (segment*2)){
+                title.innerText = 'Benjamin';
+            }
+            if(containerz.scrollLeft > (segment*2) && containerz.scrollLeft <= (segment*3)){
+                title.innerText = 'You';
+            }
+            if(containerz.scrollLeft > (segment*3) && containerz.scrollLeft <= (segment*4)){
+                title.innerText = "Can't";
+            }
+            if(containerz.scrollLeft > (segment*4) && containerz.scrollLeft <= (segment*5)){
+                title.innerText = "Touch";
+            }
+            if(containerz.scrollLeft > (segment*5)){
+                title.innerText = "This";
+            }
 
+        })
+    };
     setWheelClone();
     setTimeout(setFinal, 1500);
-    //setTimeout(scrollSpy, 1505);
+    setTimeout(scrollSpy, 1505);
     ///////////////////////////////////
     //Check for changes in device width
     ////

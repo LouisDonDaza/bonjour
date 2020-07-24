@@ -473,19 +473,8 @@ body ::-webkit-scrollbar-thumb {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center; }
-  .slideshow-title h1 {
-    font-size: 9rem;
-    text-transform: uppercase; }
-    @media only screen and (max-width: 37.5em) {
-      .slideshow-title h1 {
-        font-size: 3.5rem; } }
-  .slideshow-title p {
-    text-align: left;
-    margin: 0 auto;
-    font-size: 2rem;
-    width: 70%;
-    line-height: 1.6; }
+  text-align: center; 
+  font-size: 8rem;}
 
 .slideshow-wheel {
   opacity: 1;
