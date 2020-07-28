@@ -70,7 +70,7 @@
     <h1 class="slideshow-title" id="slideshow-title">Bonjour</h1>
 
     
-    <div class="slide slide--layout-1" id="slide--1">
+    <div class="slide slide--layout-1 slide--uno" id="slide--1">
         <div class="slide__figure slide__figure--main" data-sort="1">
             <img class="slide__figure-img" src="img/travel-1.jpeg">
         </div>
@@ -202,25 +202,6 @@
     let imgSlides;
     let numSlides = document.getElementsByClassName('mySlides--img').length;
     
-    //
-    
-    $('.mySlides--img').each(function(index){
-        let switchTL = new TimelineLite();
-        index++;
-        let slideIndex = '#slide--' + index;
-        switchTL.to('.slideshow-wheel', 0.5, {y: 200,opacity: 0})
-        .to('.slideshow-title', 0.5, {y: 200,opacity: 0}, "<")
-        .to('.slideshow-swipe', 0.5, {y: 200,opacity: 0}, "<")
-        .to(slideIndex, 0.5, {opacity: 1, y: 15, zIndex: 5, display: 'block'}).reversed(true);
-        this.animation = switchTL;
-    })
-    $(".mySlides--img").click(function(){
-        imgSlides = this;
-  this.animation.reversed(!this.animation.reversed());
-    });
-    $(".slide__back").click(function(){
-        imgSlides.animation.reversed(!imgSlides.animation.reversed());
-    });
     
     //let tlSlideIn = gsap.to('#')
 
@@ -249,9 +230,7 @@
         
         let clone=$("#wheel").contents().clone();
 
-        console.log('activated');
         clone.appendTo("#wheel");
-        
         imgGap = slidez[0].getBoundingClientRect().x;
         $('#wheel').scroll(function(){
             let scrollWindowPos = $('#wheel').scrollLeft();
@@ -263,6 +242,67 @@
                 $('#wheel').scrollLeft(containerWidth + imgGap);
             }
         })
+        ///////////////////////////////////////////
+        //imgSlides will refer to the DOM element .mySlides--img
+        //it gets declared later on in the click initialization function
+
+        
+        let imgSlides;
+        $('.mySlides--img').each(function(index){
+            let switchTL = new TimelineLite();
+            index++;
+            if(index > (numSlides+1)){
+                return false;
+            }
+            let slideIndex = '#slide--' + index;
+            if(index == numSlides + 1){
+                slideIndex = '.slide--uno';
+            }
+            switchTL.to('.slideshow-wheel', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn})
+            .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-title', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-swipe', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn}, "<")
+            .to(slideIndex, 0.4, {opacity: 1, y: 15, zIndex: 5, display: 'block', ease: Power2.easeOut}).reversed(true);
+            this.animation = switchTL;
+
+            // rotateY Timeline
+            if(index == 7){return false;}
+    let testSlide = '.mySlides--img--' + index;
+        let rotateInTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: testSlide,
+                horizontal: true,
+                scroller: "#wheel",
+                start: "left 125%",
+                end: "center 50%",
+                toggleActions: "restart complete restart none",
+                scrub: 1
+            }
+        })
+        rotateInTL.fromTo(testSlide, 0.5, {transform: "rotateZ(14deg)", translateY: "40"}, {transform: "rotateZ(0deg)", translateY: "0", ease: Power2.easeOut});
+    //rotateInTL.fromTo(testSlide, 0.5, {transform: "rotateY(45deg)"}, {transform: "rotateY(0deg)", ease: Power2.easeOut}); //boxShadow: "2rem 1rem 2.5rem rgba(0, 0, 0,.3)"
+    let rotateOutTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: testSlide,
+                horizontal: true,
+                scroller: "#wheel",
+                start: "center 49%",
+                end: "right -6%",
+                toggleActions: "restart complete restart none",
+                scrub: 1
+            }
+        })
+        rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateZ(0deg)", translateY: "0"}, {transform: "rotateZ(-10deg)", translateY: "40",ease: Power2.easeIn});
+        //rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateY(0deg)"}, {transform: "rotateY(-45deg)", ease: Power2.easeIn});
+        })
+        $(".mySlides--img").click(function(){
+            imgSlides = this;
+    this.animation.reversed(!this.animation.reversed());
+        });
+        $(".slide__back").click(function(){
+            imgSlides.animation.reversed(!imgSlides.animation.reversed());
+        });
+        /////////////////////////////////////////
         
     })
     };

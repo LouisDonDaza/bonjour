@@ -473,8 +473,15 @@ body ::-webkit-scrollbar-thumb {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: display 0.8s ease;
   text-align: center; 
-  font-size: 8rem;}
+  font-size: 9rem;
+  text-transform: uppercase;
+}
+@media only screen and (max-width: 37.5em) {
+  .slideshow-title {
+    font-size: 4.5rem;
+    transform: translate(-50%, -60%); } }
 
 .slideshow-wheel {
   opacity: 1;
@@ -496,26 +503,51 @@ body ::-webkit-scrollbar-thumb {
     @media only screen and (max-width: 37.5em) {
       .slideshow-wheel :last-child {
         margin-right: 15rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .slideshow-wheel {
+      transform: translateY(-60%); } }
 
 .mySlides {
   padding: 0 30rem;
   z-index: 6; }
-  .mySlides img {
+  .mySlides--img {
     height: auto;
-    width: 30vw;
-    box-shadow: 2rem 2rem 2rem rgba(0, 0, 0, 0.3); }
+    width: 25vw;
+    transform: rotateY(-45deg);
+    box-shadow: 1.5rem 1.5rem 2.5rem rgba(0, 0, 0, 0.3); }
     @media only screen and (max-width: 75em) {
-      .mySlides img {
-        width: 54vw;
-        height: auto; } }
+      .mySlides--img {
+        height: 70vh;
+        width: auto; } }
     @media only screen and (max-width: 56.25em) {
-      .mySlides img {
-        width: 40vw;
+      .mySlides--img {
+        width: 65vw;
         height: auto; } }
     @media only screen and (max-width: 37.5em) {
-      .mySlides img {
-        width: 85vw;
+      .mySlides--img {
+        width: 75vw;
         height: auto; } }
+    .mySlides--img--landscape {
+      height: 40vh;
+      width: auto; }
+      @media only screen and (max-width: 75em) {
+        .mySlides--img--landscape {
+          width: 50vw;
+          height: auto; } }
+      @media only screen and (max-width: 56.25em) {
+        .mySlides--img--landscape {
+          height: 38vh;
+          width: auto; } }
+      @media only screen and (max-width: 37.5em) {
+        .mySlides--img--landscape {
+          height: 27vh;
+          width: auto; } }
+  @media only screen and (max-width: 75em) {
+    .mySlides {
+      padding: 0 10rem; } }
+  @media only screen and (max-width: 56.25em) {
+    .mySlides {
+      padding: 0 9rem; } }
   @media only screen and (max-width: 37.5em) {
     .mySlides {
       padding: 0 8rem; } }
@@ -530,7 +562,9 @@ body ::-webkit-scrollbar-thumb {
   z-index: 10; }
   @media only screen and (max-width: 37.5em) {
     .slideshow-swipe {
-      font-size: 2rem; } }
+      font-size: 2rem;
+      bottom: 20%;
+      transform: translate(-50%, -60%); } }
 
 .swipe-text {
   text-align: center;
