@@ -18,7 +18,7 @@
         }
     </style>
 </head>
-<body style="margin:0;padding:0;">
+<body style="margin:0;padding:0;" class="light__mode">
     <div class="navigation">
         <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
 
@@ -184,9 +184,16 @@
             <p>A remarkable use of conjurators to confirm the evidence of witnesses occurs in 850 in a dispute between Cantius, Bishop of Siena, and Peter, Bishop of Arezzo, concerning certain parishes claimed by both. The occasion was a solemn one, for it was before a council held in Rome presided over jointly by Pope Leo IV. and the Emperor Louis II. Peter relied upon written charters, while Cantius produced witnesses. The Emperor pronounced the claim of the latter to be just, when he and twelve priests swore that the oaths of the witnesses were true and without deceit, whereupon the disputed parishes were adjudged to him.</p>
         </div>
     </div>
-    <div class="slideshow-swipe">
+    <div class="slideshow-adjust">
         <!--<i class="far fa-hand-point-up"></i>-->
-        <p class="swipe-text"><span id="left-swipe">&larr;</span> Swipe <span id="right-swipe">&rarr;</span></p>
+        <p class="swipe-text"><span><i class="fas fa-adjust "></i> <br>Background Color</span> <div class="red color__select"></div></p>
+    </div>
+    <div class="colors" id="colors">
+        <div class="colors__select colors__select--red" id="red__choice"></div>
+        <div class="colors__select colors__select--blue" id="blue__choice"></div>
+        <div class="colors__select colors__select--yellow" id="yellow__choice"></div>
+        <div class="colors__select colors__select--dark" id="dark__choice"></div>
+        <div class="colors__select colors__select--light" id="light__choice"></div>
     </div>
 </div>
 <br>
@@ -218,6 +225,49 @@
     let imgGap = 0;
     
     //set up functions
+    document.getElementsByClassName('slideshow-adjust')[0].addEventListener("click", function(){
+        //let colorsDisplay = document.getElementById('colors').style.display;
+        console.log('clicked');
+        if(document.getElementById('colors').style.display == 'none' || document.getElementById('colors').style.display == ''){
+            document.getElementById('colors').style.display = 'block';
+        }else{
+            document.getElementById('colors').style.display = 'none';
+        }
+    })
+
+    let currentBG = 'light__mode';
+    function setCurrent(newMode){
+        if(newMode !== currentBG){
+            document.body.classList.toggle(currentBG);
+            document.body.classList.toggle(newMode);
+            currentBG = newMode;
+        }
+        if(newMode == 'light__mode' || newMode == 'yellow__mode'){
+            $('.slide').each(function(){
+                this.style.color = '#000';
+            })
+        }else {
+            $('.slide').each(function(){
+                this.style.color = '#fff';
+            })
+        }
+    }
+    document.getElementById('red__choice').addEventListener('click', function(){
+        console.log('red');
+        setCurrent('red__mode');
+    });
+    document.getElementById('yellow__choice').addEventListener('click', function(){
+        setCurrent('yellow__mode');
+    });
+    document.getElementById('blue__choice').addEventListener('click', function(){
+        setCurrent('blue__mode');
+    });
+    document.getElementById('dark__choice').addEventListener('click', function(){
+        setCurrent('dark__mode');
+    });
+    document.getElementById('light__choice').addEventListener('click', function(){
+        setCurrent('light__mode');
+    });
     function setFinal(){
         segment = (containerWidth)/6;
         console.log('segment is', segment);
@@ -228,24 +278,17 @@
         $('#wheel').ready(function(){
         containerWidth = containerz.scrollWidth;
         
+        let numSlides = document.getElementsByClassName('mySlides--img').length;
         let clone=$("#wheel").contents().clone();
 
+        console.log('before width: ', containerWidth);
         clone.appendTo("#wheel");
-        imgGap = slidez[0].getBoundingClientRect().x;
-        $('#wheel').scroll(function(){
-            let scrollWindowPos = $('#wheel').scrollLeft();
-            if(scrollWindowPos >= (containerWidth + imgGap + 5)){
-                $('#wheel').scrollLeft(1)
-                ScrollTrigger.refresh();
-            }
-            if(scrollWindowPos <= 0){
-                $('#wheel').scrollLeft(containerWidth + imgGap);
-            }
-        })
         ///////////////////////////////////////////
         //imgSlides will refer to the DOM element .mySlides--img
         //it gets declared later on in the click initialization function
-
+        let extraSlide = $('#wheel').children()[6].firstElementChild;
+        extraSlide.classList.toggle('mySlides--img--1');
+        extraSlide.classList.toggle('mySlides--img--7');
         
         let imgSlides;
         $('.mySlides--img').each(function(index){
@@ -261,12 +304,12 @@
             switchTL.to('.slideshow-wheel', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn})
             .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to('.slideshow-title', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn}, "<")
-            .to('.slideshow-swipe', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-adjust', 0.4, {y: 200,opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.colors', 0.4, {y: 200,opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to(slideIndex, 0.4, {opacity: 1, y: 15, zIndex: 5, display: 'block', ease: Power2.easeOut}).reversed(true);
             this.animation = switchTL;
 
             // rotateY Timeline
-            if(index == 7){return false;}
     let testSlide = '.mySlides--img--' + index;
         let rotateInTL = gsap.timeline({
             scrollTrigger: {
@@ -274,7 +317,7 @@
                 horizontal: true,
                 scroller: "#wheel",
                 start: "left 125%",
-                end: "center 50%",
+                end: "center 51%",
                 toggleActions: "restart complete restart none",
                 scrub: 1
             }
@@ -287,12 +330,12 @@
                 horizontal: true,
                 scroller: "#wheel",
                 start: "center 49%",
-                end: "right -6%",
+                end: "right -25%",
                 toggleActions: "restart complete restart none",
                 scrub: 1
             }
         })
-        rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateZ(0deg)", translateY: "0"}, {transform: "rotateZ(-10deg)", translateY: "40",ease: Power2.easeIn});
+        rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateZ(0deg)", translateY: "0"}, {transform: "rotateZ(-14deg)", translateY: "40",ease: Power2.easeIn});
         //rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateY(0deg)"}, {transform: "rotateY(-45deg)", ease: Power2.easeIn});
         })
         $(".mySlides--img").click(function(){
@@ -303,6 +346,17 @@
             imgSlides.animation.reversed(!imgSlides.animation.reversed());
         });
         /////////////////////////////////////////
+        imgGap = slidez[0].getBoundingClientRect().x;
+        $('#wheel').scroll(function(){
+            let scrollWindowPos = $('#wheel').scrollLeft();
+            if(scrollWindowPos >= (containerWidth + imgGap + 5)){
+                $('#wheel').scrollLeft(1)
+                ScrollTrigger.refresh();
+            }
+            if(scrollWindowPos <= 0){
+                $('#wheel').scrollLeft(containerWidth + imgGap);
+            }
+        })
         
     })
     };
