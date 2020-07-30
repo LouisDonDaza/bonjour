@@ -67,7 +67,8 @@ body {
   padding: 3rem; }
   @media only screen and (max-width: 56.25em) {
     body {
-      padding: 0; } }
+      padding: 0; 
+    height: 100vh;} }
 
 ::selection {
   background-color: #e0c8af;
