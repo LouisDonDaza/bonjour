@@ -322,7 +322,7 @@
                 scrub: 1
             }
         })
-        rotateInTL.fromTo(testSlide, 0.5, {transform: "rotateZ(14deg)", translateY: "40"}, {transform: "rotateZ(0deg)", translateY: "0", ease: Power2.easeOut});
+        rotateInTL.fromTo(testSlide, 0.5, {transform: "scale(.6)", opacity: ".4"}, {transform: "scale(1)", opacity: "1", ease: Power2.easeOut});
     //rotateInTL.fromTo(testSlide, 0.5, {transform: "rotateY(45deg)"}, {transform: "rotateY(0deg)", ease: Power2.easeOut}); //boxShadow: "2rem 1rem 2.5rem rgba(0, 0, 0,.3)"
     let rotateOutTL = gsap.timeline({
             scrollTrigger: {
@@ -335,7 +335,7 @@
                 scrub: 1
             }
         })
-        rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateZ(0deg)", translateY: "0"}, {transform: "rotateZ(-14deg)", translateY: "40",ease: Power2.easeIn});
+        rotateOutTL.fromTo(testSlide, 0.5, {transform: "scale(1)", opacity: "1"}, {transform: "scale(0.6)", opacity: "0.4",ease: Power2.easeIn});
         //rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateY(0deg)"}, {transform: "rotateY(-45deg)", ease: Power2.easeIn});
         })
         $(".mySlides--img").click(function(){
