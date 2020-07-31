@@ -195,6 +195,9 @@
         <div class="colors__select colors__select--dark" id="dark__choice"></div>
         <div class="colors__select colors__select--light" id="light__choice"></div>
     </div>
+    <div class="slideshow-swipe">
+        <p class="swipe-text">Swipe &#8680;</p>
+    </div>
 </div>
 <br>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/gsap.min.js"></script>
@@ -225,6 +228,11 @@
     let imgGap = 0;
     
     //set up functions
+    window.addEventListener('DOMContentLoaded', function(){
+        let swipeTL = new TimelineLite();
+        swipeTL.to('.slideshow-swipe', 2.5, {x: "200%", color: '#fff', repeat: 2, yoyo: true})
+        .to('.slideshow-swipe', 1, {opacity: 0, autoAlpha:0});
+    })
     document.getElementsByClassName('slideshow-adjust')[0].addEventListener("click", function(){
         //let colorsDisplay = document.getElementById('colors').style.display;
         console.log('clicked');
@@ -301,44 +309,13 @@
             if(index == numSlides + 1){
                 slideIndex = '.slide--uno';
             }
-            switchTL.to('.slideshow-wheel', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn})
+            switchTL.to('.slideshow-wheel', 0.4, {y: '-100%',opacity: 0, ease: Power2.easeIn})
             .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to('.slideshow-title', 0.4, {y: 200,opacity: 0, ease: Power2.easeIn}, "<")
             .to('.slideshow-adjust', 0.4, {y: 200,opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to('.colors', 0.4, {y: 200,opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to(slideIndex, 0.4, {opacity: 1, y: 15, zIndex: 5, display: 'block', ease: Power2.easeOut}).reversed(true);
+            .to(slideIndex, 0.4, {opacity: 1, y: '2%', zIndex: 5, display: 'block', ease: Power2.easeOut}).reversed(true);
             this.animation = switchTL;
-
-            // rotateY Timeline
-    let testSlide = '.mySlides--img--' + index;
-        let rotateInTL = gsap.timeline({
-            scrollTrigger: {
-                trigger: testSlide,
-                horizontal: true,
-                scroller: "#wheel",
-                start: "left 125%",
-                end: "center 51%",
-                toggleActions: "restart complete restart none",
-                scrub: 1
-            }
-        })
-        rotateInTL.fromTo(testSlide, 0.5, {transform: "rotateZ(14deg)", translateY: "40"}, {transform: "rotateZ(0deg)", translateY: "0", ease: Power2.easeOut});
-        //rotateInTL.fromTo(testSlide, 0.5, {transform: "scale(.6)", opacity: ".4"}, {transform: "scale(1)", opacity: "1", ease: Power2.easeOut});
-    //rotateInTL.fromTo(testSlide, 0.5, {transform: "rotateY(45deg)"}, {transform: "rotateY(0deg)", ease: Power2.easeOut}); //boxShadow: "2rem 1rem 2.5rem rgba(0, 0, 0,.3)"
-    let rotateOutTL = gsap.timeline({
-            scrollTrigger: {
-                trigger: testSlide,
-                horizontal: true,
-                scroller: "#wheel",
-                start: "center 49%",
-                end: "right -25%",
-                toggleActions: "restart complete restart none",
-                scrub: 1
-            }
-        })
-        rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateZ(0deg)", translateY: "0"}, {transform: "rotateZ(-14deg)", translateY: "40",ease: Power2.easeIn});
-        //rotateOutTL.fromTo(testSlide, 0.5, {transform: "scale(1)", opacity: "1"}, {transform: "scale(0.6)", opacity: "0.4",ease: Power2.easeIn});
-        //rotateOutTL.fromTo(testSlide, 0.5, {transform: "rotateY(0deg)"}, {transform: "rotateY(-45deg)", ease: Power2.easeIn});
         })
         $(".mySlides--img").click(function(){
             imgSlides = this;
