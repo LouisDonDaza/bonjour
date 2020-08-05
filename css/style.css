@@ -663,8 +663,7 @@ body ::-webkit-scrollbar-thumb {
   clip-path: polygon(0 0, 0 0, 0 0, 0 0); }
   @media only screen and (max-width: 37.5em) {
     .slide {
-      width: 90vw;
-      max-width: 90vw; } }
+      width: 100vw;} }
   .slide__title {
     letter-spacing: 1px;
     font-size: 2.4rem;
@@ -684,6 +683,11 @@ body ::-webkit-scrollbar-thumb {
       height: auto; }
   .slide__text {
     margin: 10px 0; }
+    @media only screen and (max-width: 37.5em) {
+      .slide__text{
+        padding: 0 5px;
+      }
+    }
   .slide__back {
     opacity: 1;
     background: none;
