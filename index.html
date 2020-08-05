@@ -327,7 +327,7 @@
             .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
             .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to(slideIndex, 0.4, {display: 'block', zIndex: 5, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, ease: Power2.easeOut}).reversed(true);
+            .to(slideIndex, 0.4, {display: 'block', zIndex: 5, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, backgroundColor: '#f5f5dc', ease: Power2.easeOut}).reversed(true);
             this.animation = switchTL;
         })
         $(".mySlides--img").click(function(){
