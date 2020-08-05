@@ -659,7 +659,8 @@ body ::-webkit-scrollbar-thumb {
   z-index: 1;
   width: 700px;
   max-width: 100ch;
-  color: #000; }
+  color: #000;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0); }
   @media only screen and (max-width: 37.5em) {
     .slide {
       width: 90vw;
@@ -693,8 +694,6 @@ body ::-webkit-scrollbar-thumb {
     font-size: 2.4rem; }
     .slide__back a {
       text-decoration: none; }
-    .slide__back a:visited {
-      color: inherit; }
   .slide__content {
     opacity: 1;
     font-size: 2rem;
@@ -703,71 +702,6 @@ body ::-webkit-scrollbar-thumb {
     margin: 0px auto; }
     .slide__content p {
       margin: 20px 0; }
-
-.section-about {
-  background-color: #f7f7f7;
-  padding: 25rem 0;
-  margin-top: -20vh; }
-  @media only screen and (max-width: 56.25em) {
-    .section-about {
-      padding: 20rem 0; } }
-
-.section-features {
-  padding: 20rem 0;
-  background-image: linear-gradient(to right bottom, rgba(180, 156, 132, 0.8), rgba(136, 120, 101, 0.8)), url(../img/nat-4.jpg);
-  background-size: cover;
-  transform: skewY(-7deg);
-  margin-top: -10rem; }
-  .section-features > * {
-    transform: skewY(7deg); }
-  @media only screen and (max-width: 56.25em) {
-    .section-features {
-      padding: 10rem 0; } }
-
-.section-tours {
-  background-color: #f7f7f7;
-  padding: 25rem 0 15rem 0;
-  margin-top: -10rem; }
-  @media only screen and (max-width: 56.25em) {
-    .section-tours {
-      padding: 20rem 0 10rem 0; } }
-
-.section-stories {
-  position: relative;
-  padding: 15rem 0; }
-  @media only screen and (max-width: 56.25em) {
-    .section-stories {
-      padding: 10rem 0; } }
-
-.section-book {
-  padding: 15rem 0;
-  background-image: linear-gradient(to right bottom, #b49c84, #887865); }
-  @media only screen and (max-width: 56.25em) {
-    .section-book {
-      padding: 10rem 0; } }
-
-.book {
-  background-image: linear-gradient(105deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.9) 50%, transparent 50%), url(../img/nat-10.jpg);
-  background-size: 100%;
-  border-radius: 3px;
-  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2); }
-  @media only screen and (max-width: 75em) {
-    .book {
-      background-image: linear-gradient(105deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.9) 65%, transparent 65%), url(../img/nat-10.jpg);
-      background-size: cover; } }
-  @media only screen and (max-width: 56.25em) {
-    .book {
-      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%), url(../img/nat-10.jpg); } }
-  .book__form {
-    width: 50%;
-    padding: 6rem; }
-    @media only screen and (max-width: 75em) {
-      .book__form {
-        width: 65%; } }
-    @media only screen and (max-width: 56.25em) {
-      .book__form {
-        width: 100%; } }
-
 
         /*
         .slideshow-title {
