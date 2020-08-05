@@ -162,3 +162,36 @@ module.exports = function (e) {
     });
   }
 };
+/*
+let imgSlides;
+        $('.mySlides--img').each(function(index){
+            let switchTL = new TimelineLite();
+            index++;
+            if(index > (numSlides+1)){
+                return false;
+            }
+            let slideIndex = '#slide--' + index;
+            if(index == numSlides + 1){
+                slideIndex = '.slide--uno';
+            }
+            switchTL.to('.slideshow-wheel', 0.4, {opacity: 0, x: 50, ease: Power2.easeIn})
+            .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to(slideIndex, 0.4, {display: 'block', zIndex: 6,opacity: 1, ease: Power2.easeOut})
+            .to(slideIndex + ' .slide__content', 0.4,{clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.1")
+            .to(slideIndex + ' img', 0.4, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.3").reversed(true);
+            this.animation = switchTL;
+        })
+        $(".mySlides--img").click(function(){
+            imgSlides = this;
+    this.animation.reversed(!this.animation.reversed());
+    if(swipeTL.isActive()){
+        swipeTL.seek(swipeTL.endTime());
+    }
+        });
+        $(".slide__back").click(function(){
+            imgSlides.animation.reversed(!imgSlides.animation.reversed());
+        });
+        */
