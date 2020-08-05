@@ -196,6 +196,7 @@
     <div class="slideshow-swipe">
         <p class="swipe-text">Swipe &#8680;</p>
     </div>
+    <div class="background__slide"></div>
 </div>
 <br>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/gsap.min.js"></script>
@@ -327,7 +328,8 @@
             .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
             .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to(slideIndex, 0.4, {display: 'block', zIndex: 5, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, backgroundColor: '#f5f5dc', ease: Power2.easeOut}).reversed(true);
+            .to('.background__slide', 0.4, {backgroundImage: "radial-gradient(#e0c8af, #e0c8af)", scale: 15, zIndex: 5, ease:Power2.easeOut})
+            .to(slideIndex, 0.4, {display: 'block', zIndex: 6, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, ease: Power2.easeOut}, "<").reversed(true);
             this.animation = switchTL;
         })
         $(".mySlides--img").click(function(){
