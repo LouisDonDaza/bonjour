@@ -31,7 +31,7 @@
         <nav class="navigation__nav">
             <ul class="navigation__list">
                 <li class="navigation__item"><a href="#" class="navigation__link">About</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link">Projects</a></li>
+                <li class="navigation__item"><a href="project" class="navigation__link">Projects</a></li>
                 <li class="navigation__item"><a href="#" class="navigation__link">Store</a></li>
                 <li class="navigation__item"><a href="#" class="navigation__link">Cart(0)</a></li>
                 </ul>
@@ -193,7 +193,7 @@
     let swipeTL = new TimelineLite();
     window.addEventListener('DOMContentLoaded', function(){
         swipeTL.to('.slideshow-swipe', 2, {x: "200%", color: '#fff', repeat: 2, yoyo: true})
-        .to('#wheel', 1.5, {scrollLeft: "300"}, "<")
+        .to('#wheel', 1.5, {scrollLeft: "150"}, "<")
         .to('.slideshow-swipe', 1, {opacity: 0, autoAlpha:0});
     })
     document.getElementsByClassName('slideshow-adjust')[0].addEventListener("click", function(){
@@ -205,7 +205,11 @@
             document.getElementById('colors').style.display = 'none';
         }
     })
-
+    $("#wheel").click(function(){
+        if(swipeTL.isActive()){
+        swipeTL.seek(swipeTL.endTime());
+    }
+    })
     let currentBG = 'light__mode';
     function setCurrent(newMode){
         if(newMode !== currentBG){
@@ -292,17 +296,12 @@
             .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
             .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
             .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to(slideIndex, 0.4, {display: 'block', zIndex: 6,opacity: 1, ease: Power2.easeOut})
-            .to(slideIndex + ' .slide__content', 0.4,{clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.1")
-            .to(slideIndex + ' img', 0.4, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.3").reversed(true);
+            .to(slideIndex, 0.4, {display: 'block', zIndex: 6,opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",backgroundImage: "linear-gradient(#e0c8af,#e0c8af)", ease: Power2.easeOut}).reversed(true);
             this.animation = switchTL;
         })
         $(".mySlides--img").click(function(){
             imgSlides = this;
     this.animation.reversed(!this.animation.reversed());
-    if(swipeTL.isActive()){
-        swipeTL.seek(swipeTL.endTime());
-    }
         });
         $(".slide__back").click(function(){
             imgSlides.animation.reversed(!imgSlides.animation.reversed());
