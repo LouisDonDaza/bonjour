@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/LouisDonDaza/bonjour#readme",
   "dependencies": {
+    "@barba/core": "^2.9.7",
     "gsap": "^3.4.2"
-  }
+  },
+  "devDependencies": {}
 }

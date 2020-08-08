@@ -1,197 +1,284 @@
-var e,
-  t = require("three"),
-  i =
-    (e = require("gsap/TweenMax")) && "object" == typeof e && "default" in e
-      ? e.default
-      : e;
-module.exports = function (e) {
-  function n() {
-    for (var e = arguments, t = 0; t < arguments.length; t++)
-      if (void 0 !== e[t]) return e[t];
+///variables declaration
+let swipeTL = new TimelineLite();
+let slideIndex = 1;
+let slideClicked = '.mySlides--img--' + slideIndex; 
+let posX = 0;
+//////
+
+function getPositionFromCenter(){
+  slideClicked = '.mySlides--img--' + slideIndex;
+  try{
+    posX = (window.innerWidth/2) - document.getElementsByClassName(slideClicked.slice(1))[0].getBoundingClientRect().x ;
+  }catch(err){
+    console.log(err);
   }
-  console.log(
-    "%c Hover effect by Robin Delaporte: https://github.com/robin-dela/hover-effect ",
-    "color: #bada55; font-size: 0.8rem"
-  );
-  var r = e.parent,
-    o = e.displacementImage,
-    a = e.image1,
-    s = e.image2,
-    l = n(e.imagesRatio, 1),
-    f = n(e.intensity1, e.intensity, 1),
-    d = n(e.intensity2, e.intensity, 1),
-    u = n(e.angle, Math.PI / 4),
-    v = n(e.angle1, u),
-    m = n(e.angle2, 3 * -u),
-    c = n(e.speedIn, e.speed, 1.6),
-    p = n(e.speedOut, e.speed, 1.2),
-    g = n(e.hover, !0),
-    h = n(e.easing, Expo.easeOut),
-    y = n(e.video, !1);
-  if (r)
-    if (a && s && o) {
-      var F = new t.Scene(),
-        x = new t.OrthographicCamera(
-          r.offsetWidth / -2,
-          r.offsetWidth / 2,
-          r.offsetHeight / 2,
-          r.offsetHeight / -2,
-          1,
-          1e3
-        );
-      x.position.z = 1;
-      var w = new t.WebGLRenderer({ antialias: !1, alpha: !0 });
-      w.setPixelRatio(2),
-        w.setClearColor(16777215, 0),
-        w.setSize(r.offsetWidth, r.offsetHeight),
-        r.appendChild(w.domElement);
-      var L = function () {
-          w.render(F, x);
-        },
-        H = new t.TextureLoader();
-      H.crossOrigin = "";
-      var W,
-        V,
-        E = H.load(o, L);
-      if (((E.magFilter = E.minFilter = t.LinearFilter), y)) {
-        var P = function () {
-          requestAnimationFrame(P), w.render(F, x);
-        };
-        P(),
-          ((y = document.createElement("video")).autoplay = !0),
-          (y.loop = !0),
-          (y.src = a),
-          y.load();
-        var M = document.createElement("video");
-        (M.autoplay = !0), (M.loop = !0), (M.src = s), M.load();
-        var U = new t.VideoTexture(y),
-          C = new t.VideoTexture(M);
-        (U.magFilter = C.magFilter = t.LinearFilter),
-          (U.minFilter = C.minFilter = t.LinearFilter),
-          M.addEventListener(
-            "loadeddata",
-            function () {
-              M.play(),
-                ((C = new t.VideoTexture(M)).magFilter = t.LinearFilter),
-                (C.minFilter = t.LinearFilter),
-                (b.uniforms.texture2.value = C);
-            },
-            !1
-          ),
-          y.addEventListener(
-            "loadeddata",
-            function () {
-              y.play(),
-                ((U = new t.VideoTexture(y)).magFilter = t.LinearFilter),
-                (U.minFilter = t.LinearFilter),
-                (b.uniforms.texture1.value = U);
-            },
-            !1
-          );
-      } else
-        (U = H.load(a, L)),
-          (C = H.load(s, L)),
-          (U.magFilter = C.magFilter = t.LinearFilter),
-          (U.minFilter = C.minFilter = t.LinearFilter);
-      var R = l;
-      r.offsetHeight / r.offsetWidth < R
-        ? ((W = 1), (V = r.offsetHeight / r.offsetWidth / R))
-        : ((W = (r.offsetWidth / r.offsetHeight) * R), (V = 1));
-      var b = new t.ShaderMaterial({
-          uniforms: {
-            intensity1: { type: "f", value: f },
-            intensity2: { type: "f", value: d },
-            dispFactor: { type: "f", value: 0 },
-            angle1: { type: "f", value: v },
-            angle2: { type: "f", value: m },
-            texture1: { type: "t", value: U },
-            texture2: { type: "t", value: C },
-            disp: { type: "t", value: E },
-            res: {
-              type: "vec4",
-              value: new t.Vector4(r.offsetWidth, r.offsetHeight, W, V),
-            },
-            dpr: { type: "f", value: window.devicePixelRatio },
-          },
-          vertexShader:
-            "\nvarying vec2 vUv;\nvoid main() {\n  vUv = uv;\n  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n}\n",
-          fragmentShader:
-            "\nvarying vec2 vUv;\n\nuniform float dispFactor;\nuniform float dpr;\nuniform sampler2D disp;\n\nuniform sampler2D texture1;\nuniform sampler2D texture2;\nuniform float angle1;\nuniform float angle2;\nuniform float intensity1;\nuniform float intensity2;\nuniform vec4 res;\nuniform vec2 parent;\n\nmat2 getRotM(float angle) {\n  float s = sin(angle);\n  float c = cos(angle);\n  return mat2(c, -s, s, c);\n}\n\nvoid main() {\n  vec4 disp = texture2D(disp, vUv);\n  vec2 dispVec = vec2(disp.r, disp.g);\n\n  vec2 uv = 0.5 * gl_FragCoord.xy / (res.xy) ;\n  vec2 myUV = (uv - vec2(0.5))*res.zw + vec2(0.5);\n\n\n  vec2 distortedPosition1 = myUV + getRotM(angle1) * dispVec * intensity1 * dispFactor;\n  vec2 distortedPosition2 = myUV + getRotM(angle2) * dispVec * intensity2 * (1.0 - dispFactor);\n  vec4 _texture1 = texture2D(texture1, distortedPosition1);\n  vec4 _texture2 = texture2D(texture2, distortedPosition2);\n  gl_FragColor = mix(_texture1, _texture2, dispFactor);\n}\n",
-          transparent: !0,
-          opacity: 1,
-        }),
-        D = new t.PlaneBufferGeometry(r.offsetWidth, r.offsetHeight, 1),
-        _ = new t.Mesh(D, b);
-      F.add(_),
-        g &&
-          (r.addEventListener("mouseenter", z),
-          r.addEventListener("touchstart", z),
-          r.addEventListener("mouseleave", S),
-          r.addEventListener("touchend", S)),
-        window.addEventListener("resize", function (e) {
-          r.offsetHeight / r.offsetWidth < R
-            ? ((W = 1), (V = r.offsetHeight / r.offsetWidth / R))
-            : ((W = (r.offsetWidth / r.offsetHeight) * R), (V = 1)),
-            (_.material.uniforms.res.value = new t.Vector4(
-              r.offsetWidth,
-              r.offsetHeight,
-              W,
-              V
-            )),
-            w.setSize(r.offsetWidth, r.offsetHeight),
-            L();
-        }),
-        (this.next = z),
-        (this.previous = S);
-    } else console.warn("One or more images are missing");
-  else console.warn("Parent missing");
-  function z() {
-    i.to(b.uniforms.dispFactor, c, {
-      value: 1,
-      ease: h,
-      onUpdate: L,
-      onComplete: L,
-    });
-  }
-  function S() {
-    i.to(b.uniforms.dispFactor, p, {
-      value: 0,
-      ease: h,
-      onUpdate: L,
-      onComplete: L,
-    });
-  }
-};
-/*
-let imgSlides;
-        $('.mySlides--img').each(function(index){
-            let switchTL = new TimelineLite();
-            index++;
-            if(index > (numSlides+1)){
-                return false;
-            }
-            let slideIndex = '#slide--' + index;
-            if(index == numSlides + 1){
-                slideIndex = '.slide--uno';
-            }
-            switchTL.to('.slideshow-wheel', 0.4, {opacity: 0, x: 50, ease: Power2.easeIn})
-            .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
-            .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
-            .to(slideIndex, 0.4, {display: 'block', zIndex: 6,opacity: 1, ease: Power2.easeOut})
-            .to(slideIndex + ' .slide__content', 0.4,{clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.1")
-            .to(slideIndex + ' img', 0.4, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.3").reversed(true);
-            this.animation = switchTL;
-        })
-        $(".mySlides--img").click(function(){
-            imgSlides = this;
-    this.animation.reversed(!this.animation.reversed());
-    if(swipeTL.isActive()){
+  return posX;
+}
+function setupHome(){
+  //imgSlides will refer to the DOM element .mySlides--img
+    //it gets declared later on in the click initialization function
+
+    
+    let imgSlides;
+    let numSlides = document.getElementsByClassName('mySlides--img').length;
+
+    //let tlSlideIn = gsap.to('#')
+
+    let containerz = document.getElementById("wheel");
+    let containerWidth;
+    let segment; //one slide in the slide carousel
+    //////////////////////////////////
+    /////Change words on title
+    //////////////
+    let body = document.querySelector('body');
+
+    //slides
+    let slidez = document.getElementsByClassName('mySlides');
+    let imgGap = 0;
+    
+    //set up functions
+    window.addEventListener('DOMContentLoaded', function(){
+        swipeTL.to('.slideshow-swipe', 0.1, {opacity: 1})
+        .to('.slideshow-swipe', 2, {x: "200%", color: '#fff', repeat: 2, yoyo: true})
+        .to('.slideshow-swipe', 1, {opacity: 0, autoAlpha:0});
+    })
+    document.getElementsByClassName('slideshow-adjust')[0].addEventListener("click", function(){
+        //let colorsDisplay = document.getElementById('colors').style.display;
+        if(document.getElementById('colors').style.display == 'none' || document.getElementById('colors').style.display == ''){
+            document.getElementById('colors').style.display = 'block';
+        }else{
+            document.getElementById('colors').style.display = 'none';
+        }
+    })
+    $("#wheel").click(function(){
+        if(swipeTL.isActive()){
         swipeTL.seek(swipeTL.endTime());
     }
+    })
+    let currentBG = 'light__mode';
+    function setCurrent(newMode){
+        if(newMode !== currentBG){
+            document.body.classList.toggle(currentBG);
+            document.body.classList.toggle(newMode);
+            currentBG = newMode;
+        }
+        if(newMode == 'light__mode' || newMode == 'yellow__mode'){
+            $('.slide').each(function(){
+                this.style.color = '#000';
+            })
+            $('.slide__toggle:link').each(function(){
+                this.style.color = '#000';
+            })
+            $('.slide__toggle:visited').each(function(){
+                this.style.color = '#000';
+            })
+            document.getElementById('slideshow-title').style.color = '#000';
+        }else {
+            $('.slide').each(function(){
+                this.style.color = '#fff';
+            })
+            $('.slide__toggle:link').each(function(){
+                this.style.color = '#fff';
+            })
+            $('.slide__toggle:visited').each(function(){
+                this.style.color = '#fff';
+            })
+            document.getElementById('slideshow-title').style.color = '#fff';
+        }
+    }
+    document.getElementById('red__choice').addEventListener('click', function(){
+        console.log('red');
+        setCurrent('red__mode');
+    });
+    document.getElementById('yellow__choice').addEventListener('click', function(){
+        setCurrent('yellow__mode');
+    });
+    document.getElementById('blue__choice').addEventListener('click', function(){
+        setCurrent('blue__mode');
+    });
+    document.getElementById('dark__choice').addEventListener('click', function(){
+        setCurrent('dark__mode');
+    });
+    document.getElementById('light__choice').addEventListener('click', function(){
+        setCurrent('light__mode');
+    });
+    function setFinal(){
+        segment = (containerWidth)/6;
+        console.log('segment is', segment);
+        //debug
+        console.log('scroll width:' ,containerz.scrollWidth);
+    }
+    function setWheelClone(){
+        $('#wheel').ready(function(){
+        containerWidth = containerz.scrollWidth;
+
+        let clone=$("#wheel").contents().clone();
+
+        console.log('before width: ', containerWidth);
+        clone.appendTo("#wheel");
+        let extraSlide = $('#wheel').children()[6].children[0].children[0];
+            extraSlide.classList.toggle('mySlides--img--1');
+            extraSlide.classList.toggle('mySlides--img--7');
+        ///////////////////////////////////////////
+        
+        $(".mySlides--img").click(function(){
+            slideIndex = $('.mySlides--img').index($(this)) + 1;
         });
-        $(".slide__back").click(function(){
-            imgSlides.animation.reversed(!imgSlides.animation.reversed());
-        });
-        */
+        /////////////////////////////////////////
+        imgGap = slidez[0].getBoundingClientRect().x;
+        $('#wheel').scroll(function(){
+            let scrollWindowPos = $('#wheel').scrollLeft();
+            if(scrollWindowPos >= (containerWidth + imgGap + 5)){
+                $('#wheel').scrollLeft(1)
+                ScrollTrigger.refresh();
+            }
+            if(scrollWindowPos <= 0){
+                $('#wheel').scrollLeft(containerWidth + imgGap);
+            }
+        })
+        
+    })
+    };
+    let title = document.getElementById('slideshow-title');
+    function scrollSpy(){
+        containerz.addEventListener('scroll', function(e){
+            if(containerz.scrollLeft > 0 && containerz.scrollLeft <= segment){
+                title.innerText = 'Bonjour';
+            }
+            if(containerz.scrollLeft > segment && containerz.scrollLeft <= (segment*2)){
+                title.innerText = 'Benjamin';
+            }
+            if(containerz.scrollLeft > (segment*2) && containerz.scrollLeft <= (segment*3)){
+                title.innerText = 'Romani';
+            }
+            if(containerz.scrollLeft > (segment*3) && containerz.scrollLeft <= (segment*4)){
+                title.innerText = "Marotta";
+            }
+            if(containerz.scrollLeft > (segment*4) && containerz.scrollLeft <= (segment*5)){
+                title.innerText = "Eulalio";
+            }
+            if(containerz.scrollLeft > (segment*5)){
+                title.innerText = "Angeioletto";
+            }
+
+        })
+    };
+    setWheelClone();
+    setTimeout(setFinal, 1500);
+    setTimeout(scrollSpy, 1505);
+    ///////////////////////////////////
+    //Check for changes in device width
+    ////
+    window.addEventListener('resize', setFinal);
+}
+function pageTransition(){
+  let xShift = getPositionFromCenter();
+  var tl = gsap.timeline();
+  tl.to(slideClicked, 0.4, {x:xShift, xPercent:-50, ease: Power2.easeIn})
+}
+function contentAnimation(){
+  var tl = gsap.timeline();
+  tl.to('.slide__figure-title', 0.3, {fontSize:"12rem"})
+  .to('.slide__figure-title', 0.6, {fontSize:"7rem", transform:"translate(-50%, -100%)"})
+  .to('.slide__figure-img', 0.7, {y: window.innerHeight/2, yPercent: -50}, "<")
+}
+function homeAnimation(){
+  swipeTL.to('.slideshow-swipe', 2, {x: "200%", color: '#fff', repeat: 2, yoyo: true})
+        .to('.slideshow-swipe', 1, {opacity: 0, autoAlpha:0});
+}
+function reverseContentAnimation(){
+  if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {
+    try{
+      window.scrollTo(0);
+    } catch(err){
+      console.log('hey there', err)
+    }
+}
+else{
+  try{
+    window.scrollTo(0);
+  } catch(err){
+    console.log('hey there', err)
+  }
+}
+  var tl = gsap.timeline();
+  tl.to('.body', 0.5, {scrollTop: 0,ease: Power2.easeIn})
+  .to('.slide__figure-img', 0.7, {left: "50%", top: "50%", transform:"translate(-50%, -50%)"})
+  .to('.slide__figure-title', 0.6, {transform:"translate(-50%, -50%)"}, "<")
+  .to('.slide__figure-title', 0.3, {fontSize:"10rem"})
+}
+function delay(n){
+  n = n || 2000;
+  return new Promise(done => {
+    setTimeout(()=>{
+      done();
+    }, n)
+  });
+}
+
+barba.init({
+  transitions: [{
+    name: 'basic-transition',
+    from: {
+      namespace: ['home']
+    },
+    to: {
+      namespace: ['proj', 'proj2', 'proj3', 'proj4', 'proj5', 'proj6']
+    },
+    async leave(data){
+      const done = this.async();
+
+      console.log('leaving main',data.trigger);
+      pageTransition();
+      await delay(1500);
+      done();
+    },
+    async enter(data){
+      contentAnimation();
+      console.log('enter project');
+    },
+    async once(data){
+      contentAnimation();
+      console.log('enter project');
+    }
+  },
+  {
+    name: 'reverse-transition',
+    from: {
+      namespace: ['proj', 'proj2', 'proj3', 'proj4', 'proj5', 'proj6']
+    },
+    to: {
+      namespace: ['home']
+    },
+    async leave(data){
+      const done = this.async();
+
+      //console.log('yeet',data.trigger.getBoundingClientRect().x);
+      console.log('leaving project');
+      reverseContentAnimation();
+      await delay(1500);
+      done();
+    },
+    async enter(data){
+      console.log('enter main');
+      setupHome();
+    },
+    async once(data){
+      console.log('enter main');
+      setupHome();
+    }
+  },{
+    name: 'projects-transition',
+    to: {
+      route: ['proj', 'proj2', 'proj3', 'proj4', 'proj5', 'proj6']
+    },
+    async enter(data){
+      contentAnimation();
+      console.log('enter project');
+    },
+    async once(data){
+      contentAnimation();
+      console.log('enter project');
+    }
+  }]
+})

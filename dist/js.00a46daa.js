@@ -118,258 +118,159 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/index.js":[function(require,module,exports) {
-var animateActions = "restart complete resume none";
-var startPt = "left 50%";
-var endPt = "center 50%";
-var tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: '#test-slides-1',
-    horizontal: true,
-    scroller: "#wheel",
-    start: startPt,
-    end: endPt,
-    toggleActions: animateActions,
-    markers: true,
-    scrub: 1
-  }
-});
-tl.fromTo('#test6', 0.4, {
-  top: "50%",
-  opacity: "1"
-}, {
-  top: "60%",
-  opacity: "0",
-  ease: Power2.easeInOut
-}).fromTo('#test', 0.5, {
-  top: "40%",
-  opacity: "0"
-}, {
-  top: "50%",
-  opacity: "1",
-  ease: Power2.easeInOut
-});
-var tl2 = gsap.timeline({
-  scrollTrigger: {
-    trigger: '#test-slides-2',
-    horizontal: true,
-    scroller: "#wheel",
-    start: startPt,
-    end: endPt,
-    toggleActions: animateActions,
-    scrub: 1
-  }
-});
-tl2.fromTo('#test', 1, {
-  top: "50%",
-  opacity: "1"
-}, {
-  top: "60%",
-  opacity: "0",
-  ease: Power2.easeInOut
-}).fromTo('#test2', 1, {
-  top: "40%",
-  opacity: "0"
-}, {
-  top: "50%",
-  opacity: "1",
-  ease: Power2.easeInOut
-}, "<");
-var tl3 = gsap.timeline({
-  scrollTrigger: {
-    trigger: '#test-slides-3',
-    horizontal: true,
-    scroller: "#wheel",
-    start: startPt,
-    end: endPt,
-    toggleActions: animateActions,
-    scrub: 1
-  }
-});
-tl3.fromTo('#test2', 1, {
-  top: "50%",
-  opacity: "1"
-}, {
-  top: "60%",
-  opacity: "0",
-  ease: Power2.easeInOut
-}).fromTo('#test3', 1, {
-  top: "40%",
-  opacity: "0"
-}, {
-  top: "50%",
-  opacity: "1",
-  ease: Power2.easeInOut
-}, "<");
-var tl4 = gsap.timeline({
-  scrollTrigger: {
-    trigger: '#test-slides-4',
-    horizontal: true,
-    scroller: "#wheel",
-    start: startPt,
-    end: endPt,
-    toggleActions: animateActions,
-    scrub: 1
-  }
-});
-tl4.fromTo('#test3', 1, {
-  top: "50%",
-  opacity: "1"
-}, {
-  top: "60%",
-  opacity: "0",
-  ease: Power2.easeInOut
-}).fromTo('#test4', 1, {
-  top: "40%",
-  opacity: "0"
-}, {
-  top: "50%",
-  opacity: "1",
-  ease: Power2.easeInOut
-}, "<");
-var tl5 = gsap.timeline({
-  scrollTrigger: {
-    trigger: '#test-slides-5',
-    horizontal: true,
-    scroller: "#wheel",
-    start: startPt,
-    end: endPt,
-    toggleActions: animateActions,
-    scrub: 1
-  }
-});
-tl5.fromTo('#test4', 1, {
-  top: "50%",
-  opacity: "1"
-}, {
-  top: "60%",
-  opacity: "0",
-  ease: Power2.easeInOut
-}).fromTo('#test5', 1, {
-  top: "40%",
-  opacity: "0"
-}, {
-  top: "50%",
-  opacity: "1",
-  ease: Power2.easeInOut
-}, "<");
-var tl6 = gsap.timeline({
-  scrollTrigger: {
-    trigger: '#test-slides-6',
-    horizontal: true,
-    scroller: "#wheel",
-    start: startPt,
-    end: endPt,
-    toggleActions: animateActions,
-    scrub: 1
-  }
-});
-tl6.fromTo('#test5', 1, {
-  top: "50%",
-  opacity: "1"
-}, {
-  top: "60%",
-  opacity: "0",
-  ease: Power2.easeInOut
-}).fromTo('#test6', 1, {
-  top: "40%",
-  opacity: "0"
-}, {
-  top: "50%",
-  opacity: "1",
-  ease: Power2.easeInOut
-}, "<");
-window.addEventListener('DOMContentLoaded', function (event) {
-  var slidezz = document.getElementsByClassName('slideshow-title');
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-  for (var i = 0; i < slidezz.length; i++) {
-    slidezz[i].style.opacity = '0';
-  } //slidezz[5].style.opacity = '0';
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-}); //imgSlides will refer to the DOM element .mySlides--img
-//it gets declared later on in the click initialization function
-
-var imgSlides;
-var numSlides = document.getElementsByClassName('mySlides--img').length; //
-
-$('.mySlides--img').each(function (index) {
-  var switchTL = new TimelineLite();
-  index++;
-  var slideIndex = '#slide--' + index;
-  switchTL.to('.slideshow-wheel', 0.5, {
-    y: 200,
-    opacity: 0
-  }).to('.slideshow-title', 0.5, {
-    y: 200,
-    opacity: 0
-  }, "<").to('.slideshow-swipe', 0.5, {
-    y: 200,
-    opacity: 0
-  }, "<").to(slideIndex, 0.5, {
-    opacity: 1,
-    y: 15,
-    zIndex: 5,
-    display: 'block'
-  }).reversed(true);
-  this.animation = switchTL;
-});
-$(".mySlides--img").click(function () {
-  imgSlides = this;
-  this.animation.reversed(!this.animation.reversed());
-});
-$(".slide__back").click(function () {
-  imgSlides.animation.reversed(!imgSlides.animation.reversed());
-}); //let tlSlideIn = gsap.to('#')
-
-var containerz = document.getElementById("wheel");
-var containerWidth;
-var segment; //one slide in the slide carousel
-//////////////////////////////////
-/////Change words on title
-//////////////
-
-var body = document.querySelector('body');
-var title = document.getElementsByClassName('slideshow-title'); //slides
-
-var slidez = document.getElementsByClassName('mySlides');
-var imgGap = 0; //set up functions
-
-function setFinal() {
-  segment = containerWidth / 6;
-  console.log('segment is', segment); //debug
-
-  console.log('scroll width:', containerz.scrollWidth);
+function pageTransition() {
+  console.log('transitioning...');
+  var tl = gsap.timeline();
+  tl.to('.navigation', 0.4, {
+    opacity: 0,
+    autoAlpha: 0,
+    ease: Power2.easeIn
+  }, "<").to('.slideshow-title', 0.4, {
+    opacity: 0,
+    ease: Power2.easeIn
+  }, "<").to('.slideshow-adjust', 0.4, {
+    opacity: 0,
+    autoAlpha: 0,
+    ease: Power2.easeIn
+  }, "<").to('.colors', 0.4, {
+    opacity: 0,
+    autoAlpha: 0,
+    ease: Power2.easeIn
+  }, "<");
 }
 
-function setWheelClone() {
-  $('#wheel').ready(function () {
-    containerWidth = containerz.scrollWidth;
-    var clone = $("#wheel").contents().clone();
-    console.log('before width: ', containerWidth);
-    clone.appendTo("#wheel");
-    imgGap = slidez[0].getBoundingClientRect().x;
-    $('#wheel').scroll(function () {
-      var scrollWindowPos = $('#wheel').scrollLeft();
-
-      if (scrollWindowPos >= containerWidth + imgGap + 5) {
-        $('#wheel').scrollLeft(1);
-        ScrollTrigger.refresh();
-      }
-
-      if (scrollWindowPos <= 0) {
-        $('#wheel').scrollLeft(containerWidth + imgGap);
-      }
-    });
+function contentAnimation() {
+  var tl = gsap.timeline();
+  tl.to('.slide__figure-img', 0.5, {
+    y: window.innerHeight
   });
 }
 
-;
-setWheelClone();
-setTimeout(setFinal, 1500); //setTimeout(scrollSpy, 1505);
-///////////////////////////////////
-//Check for changes in device width
-////
+function delay(n) {
+  n = n || 2000;
+  return new Promise(function (done) {
+    setTimeout(function () {
+      done();
+    }, n);
+  });
+}
 
-window.addEventListener('resize', setFinal);
+barba.init({
+  sync: true,
+  transitions: [{
+    name: 'basic-transition',
+    from: {
+      namespace: ['home']
+    },
+    to: {
+      namespace: ['benjamin']
+    },
+    leave: function leave(data) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var done;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                done = _this.async();
+                pageTransition();
+                _context.next = 4;
+                return delay(1500);
+
+              case 4:
+                done();
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    enter: function enter(data) {
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                contentAnimation();
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    once: function once(data) {
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                contentAnimation();
+
+              case 1:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  }]
+});
+/*
+
+switchTL.to('.slideshow-wheel', 0.4, {opacity: 0, ease: Power2.easeIn})
+            .to('.mySlides--img', 0.4, {clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)", ease: Power2.easeIn}, "<")
+            .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to(slideIndex, 0.4, {display: 'block', zIndex: 6,opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",backgroundImage: "linear-gradient(#e0c8af,#e0c8af)", ease: Power2.easeOut}).reversed(true);
+            this.animation = switchTL;
+
+let imgSlides;
+        $('.mySlides--img').each(function(index){
+            let switchTL = new TimelineLite();
+            index++;
+            if(index > (numSlides+1)){
+                return false;
+            }
+            let slideIndex = '#slide--' + index;
+            if(index == numSlides + 1){
+                slideIndex = '.slide--uno';
+            }
+            switchTL.to('.slideshow-wheel', 0.4, {opacity: 0, x: 50, ease: Power2.easeIn})
+            .to('.navigation', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-title', 0.4, {opacity: 0, ease: Power2.easeIn}, "<")
+            .to('.slideshow-adjust', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to('.colors', 0.4, {opacity: 0, autoAlpha: 0, ease: Power2.easeIn}, "<")
+            .to(slideIndex, 0.4, {display: 'block', zIndex: 6,opacity: 1, ease: Power2.easeOut})
+            .to(slideIndex + ' .slide__content', 0.4,{clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.1")
+            .to(slideIndex + ' img', 0.4, {clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: Power2.easeOut}, "-=0.3").reversed(true);
+            this.animation = switchTL;
+        })
+        $(".mySlides--img").click(function(){
+            imgSlides = this;
+    this.animation.reversed(!this.animation.reversed());
+    if(swipeTL.isActive()){
+        swipeTL.seek(swipeTL.endTime());
+    }
+        });
+        $(".slide__back").click(function(){
+            imgSlides.animation.reversed(!imgSlides.animation.reversed());
+        });
+        */
 },{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -398,7 +299,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55276" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56724" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
