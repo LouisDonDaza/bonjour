@@ -179,7 +179,7 @@ function pageTransition(){
 function contentAnimation(){
   var tl = gsap.timeline();
   tl.to('.slide__figure-title', 0.3, {fontSize:"12rem"})
-  .to('.slide__figure-title', 0.6, {fontSize:"7rem", transform:"translate(-50%, -100%)"})
+  .to('.slide__figure-title', 0.6, {fontSize:"7rem", left: "50%", top: "30%", transform:"translate(-50%, -50%)"})
   .to('.slide__figure-img', 0.7, {y: window.innerHeight/2, yPercent: -50}, "<")
 }
 function homeAnimation(){
