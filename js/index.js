@@ -187,22 +187,9 @@ function homeAnimation(){
         .to('.slideshow-swipe', 1, {opacity: 0, autoAlpha:0});
 }
 function reverseContentAnimation(){
-  if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {
-    try{
-      window.scrollTo(0);
-    } catch(err){
-      console.log('hey there', err)
-    }
-}
-else{
-  try{
-    window.scrollTo(0);
-  } catch(err){
-    console.log('hey there', err)
-  }
-}
+
   var tl = gsap.timeline();
-  tl.to('.body', 0.5, {scrollTop: 0,ease: Power2.easeIn})
+  tl.to('body', 0.5, {scrollTop: 0,ease: Power2.easeIn})
   .to('.slide__figure-img', 0.7, {left: "50%", top: "50%", transform:"translate(-50%, -50%)"})
   .to('.slide__figure-title', 0.6, {transform:"translate(-50%, -50%)"}, "<")
   .to('.slide__figure-title', 0.3, {fontSize:"10rem"})
@@ -269,6 +256,9 @@ barba.init({
     }
   },{
     name: 'projects-transition',
+    from: {
+      route: ['index']
+    },
     to: {
       route: ['proj', 'proj2', 'proj3', 'proj4', 'proj5', 'proj6']
     },
